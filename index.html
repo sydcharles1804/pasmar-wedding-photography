@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pasmar Wedding Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --greige:  #C4BCBA;
+    --cream:   #EDE8DC;
+    --blush:   #D4B8B8;
+    --mauve:   #9E6B6B;
+    --plum:    #3D2438;
+    --plum-dark: #2A1828;
+    --plum-mid: #4E3048;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--plum-dark);
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  .cursor {
+    position: fixed; width: 8px; height: 8px;
+    background: var(--blush); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width .3s, height .3s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid var(--blush); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    opacity: .5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    padding: 2rem 3.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background .5s, padding .4s;
+  }
+  nav.scrolled {
+    background: rgba(42,24,40,0.95);
+    backdrop-filter: blur(12px);
+    padding: 1.2rem 3.5rem;
+    border-bottom: 1px solid rgba(212,184,184,0.12);
+  }
+  .nav-logo {
+    display: flex; flex-direction: column; gap: 0.1rem;
+  }
+  .nav-logo-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 400; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--cream);
+  }
+  .nav-logo-sub {
+    font-size: 0.55rem; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--blush); opacity: .8;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cream); opacity: .65; text-decoration: none; transition: opacity .3s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--blush); }
+  .nav-book {
+    padding: .65rem 1.6rem;
+    border: 1px solid rgba(212,184,184,.45);
+    color: var(--cream); text-decoration: none;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    transition: all .35s;
+  }
+  .nav-book:hover { background: var(--mauve); border-color: var(--mauve); }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 100vh; min-height: 680px;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+  }
+  .hero-img {
+    position: absolute; inset: 0;
+    background: url('brand_assets/Images/pexels-beniam-447198297-36237528.jpg') center center / cover no-repeat;
+    transform: scale(1.08);
+    animation: heroZoom 14s ease-out forwards;
+  }
+  @keyframes heroZoom { to { transform: scale(1.0); } }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg,
+      rgba(42,24,40,0.78) 0%,
+      rgba(42,24,40,0.35) 55%,
+      rgba(42,24,40,0.15) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 3.5rem; max-width: 780px;
+    margin: 0 auto; text-align: center;
+    animation: fadeUp 1.3s ease-out .4s both;
+  }
+  .hero-eyebrow {
+    font-size: .6rem; letter-spacing: .45em; text-transform: uppercase;
+    color: var(--blush); opacity: .9; margin-bottom: 1.6rem;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4.5rem, 10vw, 9rem);
+    font-weight: 300; line-height: .92; letter-spacing: -.01em;
+    color: var(--cream); margin-bottom: 2rem;
+  }
+  .hero-title em { font-style: italic; color: var(--blush); }
+  .hero-sub {
+    font-size: .95rem; font-weight: 300; line-height: 1.8;
+    color: var(--greige); max-width: 440px; margin: 0 auto 3rem;
+  }
+  .hero-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    padding: .9rem 2.2rem; background: var(--mauve);
+    color: var(--cream); text-decoration: none;
+    font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+    transition: background .3s, transform .3s; display: inline-block;
+  }
+  .btn-primary:hover { background: #b07b7b; transform: translateY(-2px); }
+  .btn-outline {
+    padding: .9rem 2.2rem; border: 1px solid rgba(237,232,220,.35);
+    color: var(--cream); text-decoration: none;
+    font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+    transition: all .35s; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--blush); color: var(--blush); }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; display: flex; flex-direction: column; align-items: center; gap: .7rem;
+    animation: fadeIn 2s ease-out 2s both;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 48px; background: var(--blush);
+    opacity: .5; animation: scrollPulse 2s ease-in-out infinite;
+  }
+  .hero-scroll-text {
+    font-size: .55rem; letter-spacing: .3em; text-transform: uppercase;
+    opacity: .45; writing-mode: vertical-rl;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: .5; }
+    50% { transform: scaleY(.6); opacity: .2; }
+  }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(35px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+  /* INTRO STRIP */
+  .intro-strip {
+    background: var(--cream); color: var(--plum);
+    padding: 5rem 3.5rem;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem;
+    align-items: center;
+  }
+  .intro-label {
+    font-size: .6rem; letter-spacing: .35em; text-transform: uppercase;
+    color: var(--mauve); margin-bottom: 1.5rem;
+  }
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 4vw, 3.8rem);
+    font-weight: 300; line-height: 1.05; letter-spacing: -.01em; color: var(--plum);
+  }
+  .intro-title em { font-style: italic; color: var(--mauve); }
+  .intro-text {
+    font-size: .95rem; font-weight: 300; line-height: 1.9; color: rgba(61,36,56,.7);
+    margin-bottom: 2rem;
+  }
+  .intro-stats {
+    display: flex; gap: 3rem; margin-top: 2.5rem; padding-top: 2.5rem;
+    border-top: 1px solid rgba(61,36,56,.12);
+  }
+  .intro-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 300; color: var(--mauve); line-height: 1;
+  }
+  .intro-stat-label {
+    font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+    opacity: .55; margin-top: .35rem;
+  }
+  .intro-img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    object-position: center top; filter: brightness(.92) saturate(1.05);
+  }
+
+  /* MARQUEE */
+  .marquee { overflow: hidden; white-space: nowrap; background: var(--plum); padding: .85rem 0; }
+  .marquee-track { display: inline-flex; animation: marquee 28s linear infinite; }
+  .marquee-item {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1rem; letter-spacing: .05em; color: var(--blush);
+    opacity: .8; padding: 0 2rem;
+  }
+  .marquee-sep { color: var(--mauve); opacity: .6; }
+  @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+
+  /* PORTFOLIO */
+  .portfolio { background: var(--plum-dark); padding: 7rem 3.5rem; }
+  .section-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: end; margin-bottom: 4rem;
+  }
+  .section-label {
+    font-size: .6rem; letter-spacing: .35em; text-transform: uppercase;
+    color: var(--blush); opacity: .8; margin-bottom: 1.2rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 300; line-height: 1; color: var(--cream);
+  }
+  .section-title em { font-style: italic; color: var(--blush); }
+  .section-desc {
+    font-size: .92rem; font-weight: 300; line-height: 1.85;
+    color: var(--greige); opacity: .75; max-width: 400px; align-self: end;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr .8fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+  }
+  .gallery-item { position: relative; overflow: hidden; }
+  .gallery-item:first-child { grid-row: span 2; }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: brightness(.88) saturate(1.05);
+    transition: transform .8s ease, filter .5s ease;
+  }
+  .gallery-item:first-child img { aspect-ratio: unset; }
+  .gallery-item:not(:first-child) img { aspect-ratio: 3/4; }
+  .gallery-item:hover img { transform: scale(1.04); filter: brightness(1) saturate(1.15); }
+  .gallery-item-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(42,24,40,.7) 0%, transparent 50%);
+    opacity: 0; transition: opacity .4s;
+    display: flex; align-items: flex-end; padding: 2rem;
+  }
+  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+  .gallery-tag {
+    font-size: .6rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--cream); opacity: .9;
+  }
+
+  /* ABOUT */
+  .about {
+    background: var(--cream); color: var(--plum);
+    display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh;
+  }
+  .about-img-col { position: relative; overflow: hidden; min-height: 600px; }
+  .about-img-col img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    filter: brightness(.9) saturate(.9);
+    transition: transform .8s ease;
+  }
+  .about-img-col:hover img { transform: scale(1.03); }
+  .about-content {
+    padding: 7rem 5rem; display: flex; flex-direction: column; justify-content: center;
+  }
+  .about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 3.5vw, 3.5rem);
+    font-weight: 300; line-height: 1.05; color: var(--plum); margin-bottom: 2rem;
+  }
+  .about-title em { font-style: italic; color: var(--mauve); }
+  .about-text {
+    font-size: .93rem; font-weight: 300; line-height: 1.9;
+    color: rgba(61,36,56,.7); margin-bottom: 1.5rem;
+  }
+  .about-sig {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1.6rem; font-weight: 400; color: var(--mauve);
+    margin-top: 2rem; letter-spacing: .03em;
+  }
+
+  /* SERVICES */
+  .services { background: var(--plum-dark); padding: 8rem 3.5rem; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 5rem; align-items: start;
+  }
+  .service-card-wrap { position: relative; }
+  .service-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    z-index: 2; white-space: nowrap;
+    background: linear-gradient(135deg, var(--mauve), var(--plum-mid));
+    color: var(--cream); padding: .4rem 1.2rem;
+    border-radius: 99px; font-size: .6rem; letter-spacing: .2em;
+    text-transform: uppercase; display: flex; align-items: center; gap: .4rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,.3);
+  }
+  .service-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(212,184,184,.15);
+    border-radius: 16px; padding: 2.8rem 2.5rem;
+    transition: border-color .4s, transform .4s, box-shadow .4s;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .service-card:hover {
+    border-color: rgba(212,184,184,.35);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(0,0,0,.25);
+  }
+  .service-card.featured {
+    border-color: var(--mauve);
+    background: rgba(158,107,107,.08);
+    box-shadow: 0 8px 40px rgba(158,107,107,.15);
+  }
+  .service-card.featured:hover { box-shadow: 0 24px 60px rgba(158,107,107,.25); }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400; font-style: italic;
+    color: var(--cream); line-height: 1.1; text-align: center;
+    margin-bottom: .75rem;
+  }
+  .service-desc {
+    font-size: .82rem; font-weight: 300; line-height: 1.7;
+    color: var(--greige); opacity: .65; text-align: center;
+    margin-bottom: 2rem;
+  }
+  .service-price-block {
+    text-align: center; margin-bottom: .5rem;
+  }
+  .service-price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.2rem; font-weight: 300; color: var(--cream); line-height: 1;
+  }
+  .service-price-from {
+    font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--blush); opacity: .7; display: block; margin-bottom: .3rem;
+  }
+  .service-divider {
+    height: 1px; background: rgba(212,184,184,.12); margin: 1.8rem 0;
+  }
+  .service-features {
+    list-style: none; display: flex; flex-direction: column;
+    gap: .85rem; flex: 1; margin-bottom: 2rem;
+  }
+  .service-features li {
+    font-size: .83rem; font-weight: 300; color: var(--greige);
+    opacity: .8; display: flex; align-items: center; gap: .75rem;
+  }
+  .service-features li svg {
+    flex-shrink: 0; color: var(--blush);
+  }
+  .service-btn {
+    display: block; width: 100%; text-align: center;
+    padding: .85rem 1.5rem; text-decoration: none;
+    font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+    border-radius: 8px; transition: all .3s;
+  }
+  .service-btn-outline {
+    border: 1px solid rgba(212,184,184,.3); color: var(--cream);
+  }
+  .service-btn-outline:hover { border-color: var(--blush); background: rgba(212,184,184,.07); }
+  .service-btn-filled {
+    background: var(--mauve); color: var(--cream); border: 1px solid var(--mauve);
+  }
+  .service-btn-filled:hover { background: #b07b7b; border-color: #b07b7b; }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--cream); color: var(--plum); padding: 8rem 3.5rem; }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 3rem; margin-top: 5rem;
+  }
+  .testimonial-card { display: flex; flex-direction: column; gap: 1.5rem; }
+  .testimonial-stars {
+    display: flex; gap: .3rem;
+    font-size: .8rem; color: var(--mauve);
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 400; font-style: italic;
+    line-height: 1.65; color: var(--plum); flex: 1;
+  }
+  .testimonial-name {
+    font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--mauve); opacity: .85;
+  }
+  .testimonial-date {
+    font-size: .75rem; font-weight: 300; opacity: .5; margin-top: .15rem;
+  }
+  .testimonials-divider {
+    width: 3rem; height: 1px; background: var(--mauve); opacity: .3; margin-top: .5rem;
+  }
+
+  /* CTA */
+  .cta-section {
+    position: relative; min-height: 75vh;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+  }
+  .cta-bg {
+    position: absolute; inset: 0;
+    background: url('brand_assets/Images/pexels-beniam-447198297-36237543.jpg') center 40% / cover no-repeat;
+  }
+  .cta-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(42,24,40,.85) 0%, rgba(61,36,56,.7) 100%);
+  }
+  .cta-content {
+    position: relative; z-index: 2; text-align: center;
+    padding: 4rem 3rem; max-width: 720px;
+  }
+  .cta-eyebrow {
+    font-size: .6rem; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--blush); margin-bottom: 1.8rem; opacity: .9;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6.5vw, 5.5rem);
+    font-weight: 300; font-style: italic; line-height: .95;
+    color: var(--cream); margin-bottom: 2rem;
+  }
+  .cta-sub {
+    font-size: .93rem; font-weight: 300; line-height: 1.8;
+    color: var(--greige); opacity: .8; margin-bottom: 3rem;
+  }
+  .cta-btns { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+
+  /* CONTACT FORM */
+  .contact { background: var(--plum-dark); padding: 8rem 3.5rem; }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 7rem; align-items: start;
+  }
+  .contact-info { padding-top: .5rem; }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    font-weight: 300; line-height: 1.05; color: var(--cream); margin-bottom: 2rem;
+  }
+  .contact-title em { font-style: italic; color: var(--blush); }
+  .contact-text {
+    font-size: .92rem; font-weight: 300; line-height: 1.85;
+    color: var(--greige); opacity: .7; margin-bottom: 3rem;
+  }
+  .contact-detail { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-item-label {
+    font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--blush); opacity: .7; margin-bottom: .3rem;
+  }
+  .contact-item-val {
+    font-size: .95rem; font-weight: 300; color: var(--cream); opacity: .85;
+  }
+
+  .form { display: flex; flex-direction: column; gap: 1.5rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .form-group { display: flex; flex-direction: column; gap: .6rem; }
+  .form-label {
+    font-size: .6rem; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--greige); opacity: .65;
+  }
+  .form-input, .form-textarea, .form-select {
+    background: rgba(237,232,220,.06); border: 1px solid rgba(237,232,220,.15);
+    color: var(--cream); padding: .9rem 1.2rem; font-family: 'DM Sans', sans-serif;
+    font-size: .88rem; font-weight: 300; outline: none;
+    transition: border-color .3s, background .3s;
+    appearance: none;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: rgba(212,184,184,.45); background: rgba(237,232,220,.1);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(237,232,220,.3); }
+  .form-textarea { resize: vertical; min-height: 130px; }
+  .form-select option { background: var(--plum); }
+  .form-submit {
+    padding: 1rem 2.5rem; background: var(--mauve);
+    color: var(--cream); border: none; cursor: none;
+    font-family: 'DM Sans', sans-serif; font-size: .68rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    transition: background .3s, transform .3s; align-self: flex-start;
+  }
+  .form-submit:hover { background: #b07b7b; transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--plum-dark);
+    border-top: 1px solid rgba(212,184,184,.1);
+    padding: 4.5rem 3.5rem 3rem;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 4rem; padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(212,184,184,.08);
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 300; letter-spacing: .35em;
+    text-transform: uppercase; color: var(--cream); margin-bottom: .5rem;
+  }
+  .footer-brand-tagline {
+    font-size: .78rem; font-weight: 300; line-height: 1.7;
+    color: var(--greige); opacity: .5; max-width: 240px; margin-bottom: 2rem;
+  }
+  .footer-social { display: flex; gap: 1rem; }
+  .footer-social a {
+    width: 34px; height: 34px; border: 1px solid rgba(212,184,184,.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--greige); opacity: .6; font-size: .8rem; text-decoration: none;
+    transition: all .3s;
+  }
+  .footer-social a:hover { border-color: var(--blush); opacity: 1; color: var(--blush); }
+  .footer-col-title {
+    font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--blush); opacity: .7; margin-bottom: 1.8rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: .85rem; }
+  .footer-links a {
+    font-size: .85rem; font-weight: 300; color: var(--greige);
+    opacity: .5; text-decoration: none; transition: opacity .3s, color .3s;
+  }
+  .footer-links a:hover { opacity: 1; color: var(--blush); }
+  .footer-bottom {
+    padding-top: 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-size: .72rem; font-weight: 300; opacity: .3;
+  }
+  .footer-policy { display: flex; gap: 2rem; }
+  .footer-policy a {
+    font-size: .7rem; font-weight: 300; color: var(--greige);
+    opacity: .3; text-decoration: none; transition: opacity .3s;
+  }
+  .footer-policy a:hover { opacity: .8; }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .9s ease, transform .9s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: .12s; }
+  .reveal-d2 { transition-delay: .24s; }
+  .reveal-d3 { transition-delay: .36s; }
+  .reveal-d4 { transition-delay: .48s; }
+
+  /* GRAIN */
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: .025; pointer-events: none; z-index: 8000;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 1.5rem; }
+    .nav-links, .nav-book { display: none; }
+    .hero-content { padding: 0 1.5rem; }
+    .intro-strip { grid-template-columns: 1fr; gap: 3rem; }
+    .about { grid-template-columns: 1fr; }
+    .about-img-col { min-height: 400px; }
+    .about-content { padding: 4rem 2rem; }
+    .services-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .section-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-row: span 1; grid-column: span 2; }
+    .gallery-item:first-child img { aspect-ratio: 16/9; }
+    .gallery-item:not(:first-child) img { aspect-ratio: 1; }
+    .contact-inner { grid-template-columns: 1fr; gap: 4rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">
+    <span class="nav-logo-main">Pasmar</span>
+    <span class="nav-logo-sub">Wedding Photography</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-book">Book a Consultation</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Fine Art Wedding Photography</p>
+    <h1 class="hero-title">Your Story,<br><em>Beautifully Told.</em></h1>
+    <p class="hero-sub">Capturing the quiet glances, tender moments, and joyful tears that make your wedding day unlike any other. Editorial. Intimate. Timeless.</p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-primary">View Portfolio</a>
+      <a href="#contact" class="btn-outline">Book a Date</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="hero-scroll-text">Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<div class="intro-strip">
+  <div>
+    <p class="intro-label reveal">Pasmar Wedding Photography</p>
+    <h2 class="intro-title reveal reveal-d1">Every Frame<br>a <em>Memory</em><br>That Lasts</h2>
+    <div class="intro-stats reveal reveal-d2">
+      <div>
+        <div class="intro-stat-num">250+</div>
+        <div class="intro-stat-label">Weddings Captured</div>
+      </div>
+      <div>
+        <div class="intro-stat-num">8</div>
+        <div class="intro-stat-label">Years of Excellence</div>
+      </div>
+      <div>
+        <div class="intro-stat-num">12</div>
+        <div class="intro-stat-label">Awards Won</div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal reveal-d1">
+    <p class="intro-text">We believe wedding photography is more than documentation — it's the art of preserving emotion. From the soft morning light as you prepare, to the last dance under the stars, every image we create is crafted with intention and heart.</p>
+    <p class="intro-text">Based across multiple cities, we travel wherever love takes us.</p>
+    <a href="#about" class="btn-primary" style="margin-top:1rem;">Meet the Photographer</a>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Fine Art Photography</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Editorial Weddings</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Destination Coverage</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Intimate Portraits</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Luxury Packages</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Same-Day Edits</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Pasmar Wedding Photography</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Fine Art Photography</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Editorial Weddings</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Destination Coverage</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Intimate Portraits</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Luxury Packages</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Same-Day Edits</span>
+    <span class="marquee-item marquee-sep">✦</span>
+    <span class="marquee-item">Pasmar Wedding Photography</span>
+    <span class="marquee-item marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="section-header">
+    <div>
+      <p class="section-label reveal">001 / Portfolio</p>
+      <h2 class="section-title reveal reveal-d1">Stories<br>We've <em>Told</em></h2>
+    </div>
+    <p class="section-desc reveal reveal-d2">A curated selection from weddings that moved us — each one a universe of love, distinct and unrepeatable. These are not just photographs. They are your future heirlooms.</p>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <img src="brand_assets/Images/pexels-beniam-447198297-36237528.jpg" alt="Wedding Ceremony — Couple Embracing">
+      <div class="gallery-item-overlay"><span class="gallery-tag">The Ceremony</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-d1">
+      <img src="brand_assets/Images/pexels-beniam-447198297-36237385.jpg" alt="Couple Portrait Session">
+      <div class="gallery-item-overlay"><span class="gallery-tag">Editorial Portraits</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-d2">
+      <img src="brand_assets/Images/pexels-karl-rayson-10231869-33878445.jpg" alt="Wedding Entertainment">
+      <div class="gallery-item-overlay"><span class="gallery-tag">The Celebration</span></div>
+    </div>
+    <div class="gallery-item reveal reveal-d1" style="grid-column: 2 / span 2;">
+      <img src="brand_assets/Images/pexels-beniam-447198297-36237543.jpg" alt="Reception Sweetheart Table" style="aspect-ratio:16/7;">
+      <div class="gallery-item-overlay"><span class="gallery-tag">The Reception</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img-col">
+    <img src="brand_assets/Images/pexels-jay-soundo-2148060180-34462369.jpg" alt="Pasmar — Wedding Photographer">
+  </div>
+  <div class="about-content">
+    <p class="section-label reveal">002 / The Photographer</p>
+    <h2 class="about-title reveal reveal-d1">I Don't Just<br><em>Photograph</em><br>Weddings.</h2>
+    <p class="about-text reveal reveal-d2">I witness them. Every couple carries their own universe — the inside jokes, the nervous hands, the moment you forget the world exists. My job is to disappear into that universe and bring back proof that it was real.</p>
+    <p class="about-text reveal reveal-d2">With a background in fine art and a decade of wedding photography, I approach every day with a documentarian's eye and an artist's heart. No forced poses. No rushed timelines. Just authentic moments, beautifully rendered.</p>
+    <div class="testimonials-divider reveal reveal-d3" style="background:var(--mauve); width:3rem;"></div>
+    <div class="about-sig reveal reveal-d3">— Pasmar</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div>
+      <p class="section-label reveal">003 / Services</p>
+      <h2 class="section-title reveal reveal-d1">Packages<br>Crafted for <em>You</em></h2>
+    </div>
+    <p class="section-desc reveal reveal-d2" style="color:var(--greige);">Every wedding is different. Our packages are designed as starting points — we'll tailor everything to match your day, your vision, and your love story.</p>
+  </div>
+
+  <div class="services-grid">
+
+    <!-- THE ELOPEMENT -->
+    <div class="service-card-wrap reveal">
+      <div class="service-card">
+        <div class="service-name">The Elopement</div>
+        <p class="service-desc">For intimate ceremonies and microweddings. Everything you need, nothing you don't.</p>
+        <div class="service-price-block">
+          <span class="service-price-from">From</span>
+          <div class="service-price-amount">$1,800</div>
+        </div>
+        <div class="service-divider"></div>
+        <ul class="service-features">
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>6 hours of coverage</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>400+ edited images</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Online gallery (2 years)</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Print release included</li>
+        </ul>
+        <a href="#contact" class="service-btn service-btn-outline">Enquire Now</a>
+      </div>
+    </div>
+
+    <!-- THE CLASSIC (FEATURED) -->
+    <div class="service-card-wrap reveal reveal-d1">
+      <div class="service-badge">★ Most Popular</div>
+      <div class="service-card featured">
+        <div class="service-name">The Classic</div>
+        <p class="service-desc">Our most loved package. Full-day coverage from preparation to the first dances.</p>
+        <div class="service-price-block">
+          <span class="service-price-from">From</span>
+          <div class="service-price-amount">$3,200</div>
+        </div>
+        <div class="service-divider"></div>
+        <ul class="service-features">
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>10 hours of coverage</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>700+ edited images</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Engagement session included</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Luxury USB & print release</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Online gallery (lifetime)</li>
+        </ul>
+        <a href="#contact" class="service-btn service-btn-filled">Enquire Now</a>
+      </div>
+    </div>
+
+    <!-- THE LEGACY -->
+    <div class="service-card-wrap reveal reveal-d2">
+      <div class="service-card">
+        <div class="service-name">The Legacy</div>
+        <p class="service-desc">The complete Pasmar experience. Two photographers, film, and a heirloom album for generations.</p>
+        <div class="service-price-block">
+          <span class="service-price-from">From</span>
+          <div class="service-price-amount">$5,500</div>
+        </div>
+        <div class="service-divider"></div>
+        <ul class="service-features">
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Full weekend coverage</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>1,200+ edited images</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Second photographer</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Cinematic highlight film</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Custom heirloom album</li>
+          <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity=".4"/><path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Engagement session</li>
+        </ul>
+        <a href="#contact" class="service-btn service-btn-outline">Enquire Now</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-header">
+    <div>
+      <p class="section-label reveal" style="color:var(--mauve);">004 / Kind Words</p>
+      <h2 class="section-title reveal reveal-d1" style="color:var(--plum);">What Couples<br><em>Say</em></h2>
+    </div>
+    <p class="section-desc reveal reveal-d2" style="color:rgba(61,36,56,.65);">Our couples say it better than we ever could. These aren't just reviews — they're the reason we do what we do.</p>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">"When we opened our gallery, I cried for an hour. Pasmar captured something I didn't even know was happening — the real us, on the most real day of our lives."</p>
+      <div class="testimonials-divider"></div>
+      <div class="testimonial-name">Amara & James</div>
+      <div class="testimonial-date">Lagos · March 2025</div>
+    </div>
+    <div class="testimonial-card reveal reveal-d1">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">"We booked Pasmar sight-unseen after seeing one photo on Instagram. Best decision we made. Every image is a painting. We get compliments constantly."</p>
+      <div class="testimonials-divider"></div>
+      <div class="testimonial-name">Chidinma & Kofi</div>
+      <div class="testimonial-date">Accra · November 2024</div>
+    </div>
+    <div class="testimonial-card reveal reveal-d2">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">"Professional, warm, unobtrusive, and gifted. Pasmar made our guests forget there was even a photographer. The results speak for themselves — absolutely stunning."</p>
+      <div class="testimonials-divider"></div>
+      <div class="testimonial-name">Tunde & Adaeze</div>
+      <div class="testimonial-date">London · August 2024</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <p class="cta-eyebrow reveal">Limited Dates Available</p>
+    <h2 class="cta-title reveal reveal-d1">Your Wedding<br>Deserves Art</h2>
+    <p class="cta-sub reveal reveal-d2">We only accept a small number of weddings each year to ensure every couple receives our full attention and craft. Enquire now to check your date.</p>
+    <div class="cta-btns reveal reveal-d3">
+      <a href="#contact" class="btn-primary">Check Availability</a>
+      <a href="#portfolio" class="btn-outline">View Full Portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <p class="section-label reveal">005 / Let's Connect</p>
+      <h2 class="contact-title reveal reveal-d1">Begin Your<br><em>Story</em> With Us</h2>
+      <p class="contact-text reveal reveal-d2">Tell us about your day and we'll get back to you within 48 hours. We can't wait to hear how you found each other.</p>
+      <div class="contact-detail reveal reveal-d3">
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-val">hello@pasmarphoto.com</div>
+        </div>
+        <div>
+          <div class="contact-item-label">Phone</div>
+          <div class="contact-item-val">+1 (555) 000-0000</div>
+        </div>
+        <div>
+          <div class="contact-item-label">Based In</div>
+          <div class="contact-item-val">Available Worldwide</div>
+        </div>
+        <div>
+          <div class="contact-item-label">Response Time</div>
+          <div class="contact-item-val">Within 48 Hours</div>
+        </div>
+      </div>
+    </div>
+
+    <form class="form reveal reveal-d1" onsubmit="return false;">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" placeholder="First & Last Name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Partner's Name</label>
+          <input class="form-input" type="text" placeholder="First & Last Name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Wedding Date</label>
+          <input class="form-input" type="date">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Package Interest</label>
+        <select class="form-select form-input">
+          <option value="">Select a Package</option>
+          <option>The Elopement — From $1,800</option>
+          <option>The Classic — From $3,200</option>
+          <option>The Legacy — From $5,500</option>
+          <option>Not Sure Yet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Venue / Location</label>
+        <input class="form-input" type="text" placeholder="City, Country or Venue Name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tell Us Your Story</label>
+        <textarea class="form-textarea" placeholder="How did you meet? What matters most to you about your day?"></textarea>
+      </div>
+      <button class="form-submit" type="submit">Send Your Enquiry →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Pasmar</div>
+      <p class="footer-brand-tagline">Fine art wedding photography for couples who value authenticity, beauty, and the art of memory.</p>
+      <div class="footer-social">
+        <a href="#" title="Instagram">IG</a>
+        <a href="#" title="Pinterest">PT</a>
+        <a href="#" title="Facebook">FB</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#about">About Pasmar</a></li>
+        <li><a href="#services">Packages</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">The Elopement</a></li>
+        <li><a href="#">The Classic</a></li>
+        <li><a href="#">The Legacy</a></li>
+        <li><a href="#">Destination Weddings</a></li>
+        <li><a href="#">Engagement Sessions</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="mailto:hello@pasmarphoto.com">hello@pasmarphoto.com</a></li>
+        <li><a href="#">+1 (555) 000-0000</a></li>
+        <li><a href="#">Available Worldwide</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Pasmar Wedding Photography. All rights reserved.</span>
+    <div class="footer-policy">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  (function anim() {
+    rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(anim);
+  })();
+  document.querySelectorAll('a,button,input,textarea,select').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '18px'; cursor.style.height = '18px';
+      ring.style.width = '54px'; ring.style.height = '54px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '8px'; cursor.style.height = '8px';
+      ring.style.width = '36px'; ring.style.height = '36px';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Hero parallax
+  window.addEventListener('scroll', () => {
+    const heroBg = document.querySelector('.hero-img');
+    const s = window.scrollY;
+    if (s < window.innerHeight) heroBg.style.transform = `scale(1.05) translateY(${s * 0.22}px)`;
+  });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
