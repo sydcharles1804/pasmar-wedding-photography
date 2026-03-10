@@ -19,7 +19,7 @@
     --plum-mid: #4E3048;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     font-family: 'DM Sans', sans-serif;
@@ -166,8 +166,8 @@
   .intro-strip {
     background: var(--cream); color: var(--plum);
     padding: 5rem 3.5rem;
-    display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem;
-    align-items: center;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center; gap: 3rem;
   }
   .intro-label {
     font-size: .6rem; letter-spacing: .35em; text-transform: uppercase;
@@ -175,8 +175,9 @@
   }
   .intro-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.6rem, 4vw, 3.8rem);
-    font-weight: 300; line-height: 1.05; letter-spacing: -.01em; color: var(--plum);
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 300; line-height: 1.15; letter-spacing: -.01em; color: var(--plum);
+    white-space: nowrap;
   }
   .intro-title em { font-style: italic; color: var(--mauve); }
   .intro-text {
@@ -185,7 +186,7 @@
   }
   .intro-stats {
     display: flex; gap: 3rem; margin-top: 2.5rem; padding-top: 2.5rem;
-    border-top: 1px solid rgba(61,36,56,.12);
+    border-top: 1px solid rgba(61,36,56,.12); justify-content: center;
   }
   .intro-stat-num {
     font-family: 'Cormorant Garamond', serif;
@@ -214,8 +215,9 @@
   /* PORTFOLIO */
   .portfolio { background: var(--plum-dark); padding: 7rem 3.5rem; }
   .section-header {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 4rem; align-items: end; margin-bottom: 4rem;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    gap: 1.5rem; margin-bottom: 4rem;
   }
   .section-label {
     font-size: .6rem; letter-spacing: .35em; text-transform: uppercase;
@@ -223,42 +225,64 @@
   }
   .section-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.8rem, 5vw, 4.5rem);
-    font-weight: 300; line-height: 1; color: var(--cream);
+    font-size: clamp(2rem, 3.2vw, 3.2rem);
+    font-weight: 300; line-height: 1.1; color: var(--cream);
+    white-space: nowrap;
   }
   .section-title em { font-style: italic; color: var(--blush); }
   .section-desc {
     font-size: .92rem; font-weight: 300; line-height: 1.85;
-    color: var(--greige); opacity: .75; max-width: 400px; align-self: end;
+    color: var(--greige); opacity: .75; max-width: 520px; text-align: center;
   }
 
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 1.2fr .8fr .8fr;
-    grid-template-rows: auto auto;
-    gap: 1rem;
+  /* GALLERY CAROUSEL */
+  .gallery-carousel { position: relative; overflow: hidden; width: 100%; border-radius: 4px; }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .gallery-item { position: relative; overflow: hidden; }
-  .gallery-item:first-child { grid-row: span 2; }
-  .gallery-item img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
+  .carousel-slide {
+    min-width: 100%; position: relative; overflow: hidden; flex-shrink: 0;
+  }
+  .carousel-slide img {
+    width: 100%; height: 70vh; object-fit: cover; display: block;
     filter: brightness(.88) saturate(1.05);
-    transition: transform .8s ease, filter .5s ease;
+    transition: filter .5s ease;
   }
-  .gallery-item:first-child img { aspect-ratio: unset; }
-  .gallery-item:not(:first-child) img { aspect-ratio: 3/4; }
-  .gallery-item:hover img { transform: scale(1.04); filter: brightness(1) saturate(1.15); }
+  .carousel-slide:hover img { filter: brightness(1) saturate(1.15); }
   .gallery-item-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(42,24,40,.7) 0%, transparent 50%);
-    opacity: 0; transition: opacity .4s;
-    display: flex; align-items: flex-end; padding: 2rem;
+    background: linear-gradient(to top, rgba(42,24,40,.75) 0%, transparent 55%);
+    display: flex; align-items: flex-end; padding: 2.5rem;
   }
-  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
   .gallery-tag {
     font-size: .6rem; letter-spacing: .25em; text-transform: uppercase;
     color: var(--cream); opacity: .9;
   }
+  .carousel-dots {
+    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; gap: .6rem; z-index: 10;
+  }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1px solid rgba(237,232,220,.7); background: transparent;
+    cursor: pointer; opacity: .5; transition: all .3s; padding: 0;
+  }
+  .carousel-dot.active { background: var(--cream); opacity: 1; transform: scale(1.25); }
+  .carousel-arrows {
+    position: absolute; top: 50%; left: 0; right: 0;
+    display: flex; justify-content: space-between; padding: 0 1.5rem;
+    transform: translateY(-50%); z-index: 10; pointer-events: none;
+  }
+  .carousel-arrow {
+    pointer-events: all; width: 44px; height: 44px;
+    border: 1px solid rgba(237,232,220,.35); border-radius: 50%;
+    background: rgba(42,24,40,.55); backdrop-filter: blur(6px);
+    color: var(--cream); font-size: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .3s; opacity: .7;
+  }
+  .carousel-arrow:hover { opacity: 1; background: rgba(158,107,107,.6); border-color: var(--blush); }
 
   /* ABOUT */
   .about {
@@ -275,11 +299,13 @@
   .about-img-col:hover img { transform: scale(1.03); }
   .about-content {
     padding: 7rem 5rem; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; text-align: center;
   }
   .about-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 3.5vw, 3.5rem);
-    font-weight: 300; line-height: 1.05; color: var(--plum); margin-bottom: 2rem;
+    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+    font-weight: 300; line-height: 1.15; color: var(--plum); margin-bottom: 2rem;
+    white-space: nowrap;
   }
   .about-title em { font-style: italic; color: var(--mauve); }
   .about-text {
@@ -427,9 +453,9 @@
   }
   .cta-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 6.5vw, 5.5rem);
-    font-weight: 300; font-style: italic; line-height: .95;
-    color: var(--cream); margin-bottom: 2rem;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 300; font-style: italic; line-height: 1.1;
+    color: var(--cream); margin-bottom: 2rem; white-space: nowrap;
   }
   .cta-sub {
     font-size: .93rem; font-weight: 300; line-height: 1.8;
@@ -442,11 +468,12 @@
   .contact-inner {
     display: grid; grid-template-columns: 1fr 1.2fr; gap: 7rem; align-items: start;
   }
-  .contact-info { padding-top: .5rem; }
+  .contact-info { padding-top: .5rem; text-align: center; }
   .contact-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 4vw, 3.8rem);
-    font-weight: 300; line-height: 1.05; color: var(--cream); margin-bottom: 2rem;
+    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+    font-weight: 300; line-height: 1.15; color: var(--cream); margin-bottom: 2rem;
+    white-space: nowrap;
   }
   .contact-title em { font-style: italic; color: var(--blush); }
   .contact-text {
@@ -566,17 +593,15 @@
     nav { padding: 1.5rem; }
     .nav-links, .nav-book { display: none; }
     .hero-content { padding: 0 1.5rem; }
-    .intro-strip { grid-template-columns: 1fr; gap: 3rem; }
+    .intro-strip { padding: 4rem 1.5rem; }
     .about { grid-template-columns: 1fr; }
     .about-img-col { min-height: 400px; }
     .about-content { padding: 4rem 2rem; }
     .services-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .testimonials-grid { grid-template-columns: 1fr; }
-    .section-header { grid-template-columns: 1fr; gap: 1.5rem; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; }
-    .gallery-item:first-child { grid-row: span 1; grid-column: span 2; }
-    .gallery-item:first-child img { aspect-ratio: 16/9; }
-    .gallery-item:not(:first-child) img { aspect-ratio: 1; }
+    .section-header { gap: 1rem; }
+    .carousel-slide img { height: 55vw; }
+    .section-title, .intro-title, .about-title, .contact-title, .cta-title { white-space: normal; }
     .contact-inner { grid-template-columns: 1fr; gap: 4rem; }
     .form-row { grid-template-columns: 1fr; }
     .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem; }
@@ -626,7 +651,7 @@
 <div class="intro-strip">
   <div>
     <p class="intro-label reveal">Pasmar Wedding Photography</p>
-    <h2 class="intro-title reveal reveal-d1">Every Frame<br>a <em>Memory</em><br>That Lasts</h2>
+    <h2 class="intro-title reveal reveal-d1">Every Frame, a <em>Memory</em> That Lasts</h2>
     <div class="intro-stats reveal reveal-d2">
       <div>
         <div class="intro-stat-num">250+</div>
@@ -649,66 +674,44 @@
   </div>
 </div>
 
-<!-- MARQUEE -->
-<div class="marquee">
-  <div class="marquee-track">
-    <span class="marquee-item">Fine Art Photography</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Editorial Weddings</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Destination Coverage</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Intimate Portraits</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Luxury Packages</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Same-Day Edits</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Pasmar Wedding Photography</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Fine Art Photography</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Editorial Weddings</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Destination Coverage</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Intimate Portraits</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Luxury Packages</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Same-Day Edits</span>
-    <span class="marquee-item marquee-sep">✦</span>
-    <span class="marquee-item">Pasmar Wedding Photography</span>
-    <span class="marquee-item marquee-sep">✦</span>
-  </div>
-</div>
-
 <!-- PORTFOLIO -->
 <section class="portfolio" id="portfolio">
   <div class="section-header">
     <div>
       <p class="section-label reveal">001 / Portfolio</p>
-      <h2 class="section-title reveal reveal-d1">Stories<br>We've <em>Told</em></h2>
+      <h2 class="section-title reveal reveal-d1">Stories We've <em>Told</em></h2>
     </div>
     <p class="section-desc reveal reveal-d2">A curated selection from weddings that moved us — each one a universe of love, distinct and unrepeatable. These are not just photographs. They are your future heirlooms.</p>
   </div>
 
-  <div class="gallery-grid">
-    <div class="gallery-item reveal">
-      <img src="brand_assets/Images/pexels-beniam-447198297-36237528.jpg" alt="Wedding Ceremony — Couple Embracing">
-      <div class="gallery-item-overlay"><span class="gallery-tag">The Ceremony</span></div>
+  <div class="gallery-carousel reveal">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-slide">
+        <img src="brand_assets/Images/pexels-beniam-447198297-36237528.jpg" alt="Wedding Ceremony — Couple Embracing">
+        <div class="gallery-item-overlay"><span class="gallery-tag">The Ceremony</span></div>
+      </div>
+      <div class="carousel-slide">
+        <img src="brand_assets/Images/pexels-beniam-447198297-36237385.jpg" alt="Couple Portrait Session">
+        <div class="gallery-item-overlay"><span class="gallery-tag">Editorial Portraits</span></div>
+      </div>
+      <div class="carousel-slide">
+        <img src="brand_assets/Images/pexels-karl-rayson-10231869-33878445.jpg" alt="Wedding Entertainment">
+        <div class="gallery-item-overlay"><span class="gallery-tag">The Celebration</span></div>
+      </div>
+      <div class="carousel-slide">
+        <img src="brand_assets/Images/pexels-beniam-447198297-36237543.jpg" alt="Reception Sweetheart Table">
+        <div class="gallery-item-overlay"><span class="gallery-tag">The Reception</span></div>
+      </div>
     </div>
-    <div class="gallery-item reveal reveal-d1">
-      <img src="brand_assets/Images/pexels-beniam-447198297-36237385.jpg" alt="Couple Portrait Session">
-      <div class="gallery-item-overlay"><span class="gallery-tag">Editorial Portraits</span></div>
+    <div class="carousel-arrows">
+      <button class="carousel-arrow" id="carouselPrev">&#8592;</button>
+      <button class="carousel-arrow" id="carouselNext">&#8594;</button>
     </div>
-    <div class="gallery-item reveal reveal-d2">
-      <img src="brand_assets/Images/pexels-karl-rayson-10231869-33878445.jpg" alt="Wedding Entertainment">
-      <div class="gallery-item-overlay"><span class="gallery-tag">The Celebration</span></div>
-    </div>
-    <div class="gallery-item reveal reveal-d1" style="grid-column: 2 / span 2;">
-      <img src="brand_assets/Images/pexels-beniam-447198297-36237543.jpg" alt="Reception Sweetheart Table" style="aspect-ratio:16/7;">
-      <div class="gallery-item-overlay"><span class="gallery-tag">The Reception</span></div>
+    <div class="carousel-dots" id="carouselDots">
+      <button class="carousel-dot active" data-idx="0"></button>
+      <button class="carousel-dot" data-idx="1"></button>
+      <button class="carousel-dot" data-idx="2"></button>
+      <button class="carousel-dot" data-idx="3"></button>
     </div>
   </div>
 </section>
@@ -720,7 +723,7 @@
   </div>
   <div class="about-content">
     <p class="section-label reveal">002 / The Photographer</p>
-    <h2 class="about-title reveal reveal-d1">I Don't Just<br><em>Photograph</em><br>Weddings.</h2>
+    <h2 class="about-title reveal reveal-d1">I Don't Just <em>Photograph</em> Weddings.</h2>
     <p class="about-text reveal reveal-d2">I witness them. Every couple carries their own universe — the inside jokes, the nervous hands, the moment you forget the world exists. My job is to disappear into that universe and bring back proof that it was real.</p>
     <p class="about-text reveal reveal-d2">With a background in fine art and a decade of wedding photography, I approach every day with a documentarian's eye and an artist's heart. No forced poses. No rushed timelines. Just authentic moments, beautifully rendered.</p>
     <div class="testimonials-divider reveal reveal-d3" style="background:var(--mauve); width:3rem;"></div>
@@ -733,7 +736,7 @@
   <div class="section-header">
     <div>
       <p class="section-label reveal">003 / Services</p>
-      <h2 class="section-title reveal reveal-d1">Packages<br>Crafted for <em>You</em></h2>
+      <h2 class="section-title reveal reveal-d1">Packages Crafted for <em>You</em></h2>
     </div>
     <p class="section-desc reveal reveal-d2" style="color:var(--greige);">Every wedding is different. Our packages are designed as starting points — we'll tailor everything to match your day, your vision, and your love story.</p>
   </div>
@@ -812,7 +815,7 @@
   <div class="section-header">
     <div>
       <p class="section-label reveal" style="color:var(--mauve);">004 / Kind Words</p>
-      <h2 class="section-title reveal reveal-d1" style="color:var(--plum);">What Couples<br><em>Say</em></h2>
+      <h2 class="section-title reveal reveal-d1" style="color:var(--plum);">What Couples <em>Say</em></h2>
     </div>
     <p class="section-desc reveal reveal-d2" style="color:rgba(61,36,56,.65);">Our couples say it better than we ever could. These aren't just reviews — they're the reason we do what we do.</p>
   </div>
@@ -848,7 +851,7 @@
   <div class="cta-overlay"></div>
   <div class="cta-content">
     <p class="cta-eyebrow reveal">Limited Dates Available</p>
-    <h2 class="cta-title reveal reveal-d1">Your Wedding<br>Deserves Art</h2>
+    <h2 class="cta-title reveal reveal-d1">Your Wedding Deserves Art</h2>
     <p class="cta-sub reveal reveal-d2">We only accept a small number of weddings each year to ensure every couple receives our full attention and craft. Enquire now to check your date.</p>
     <div class="cta-btns reveal reveal-d3">
       <a href="#contact" class="btn-primary">Check Availability</a>
@@ -862,7 +865,7 @@
   <div class="contact-inner">
     <div class="contact-info">
       <p class="section-label reveal">005 / Let's Connect</p>
-      <h2 class="contact-title reveal reveal-d1">Begin Your<br><em>Story</em> With Us</h2>
+      <h2 class="contact-title reveal reveal-d1">Begin Your <em>Story</em> With Us</h2>
       <p class="contact-text reveal reveal-d2">Tell us about your day and we'll get back to you within 48 hours. We can't wait to hear how you found each other.</p>
       <div class="contact-detail reveal reveal-d3">
         <div>
@@ -1020,6 +1023,42 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Gallery carousel
+  const carouselTrack = document.getElementById('carouselTrack');
+  const carouselDots = document.querySelectorAll('.carousel-dot');
+  const totalSlides = carouselTrack ? carouselTrack.children.length : 0;
+  let currentSlide = 0;
+  let carouselTimer;
+
+  function goToSlide(idx) {
+    currentSlide = ((idx % totalSlides) + totalSlides) % totalSlides;
+    carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    carouselDots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+  }
+
+  function startCarousel() {
+    carouselTimer = setInterval(() => goToSlide(currentSlide + 1), 5000);
+  }
+
+  if (carouselTrack) {
+    carouselDots.forEach(dot => dot.addEventListener('click', () => {
+      clearInterval(carouselTimer);
+      goToSlide(+dot.dataset.idx);
+      startCarousel();
+    }));
+    document.getElementById('carouselPrev').addEventListener('click', () => {
+      clearInterval(carouselTimer);
+      goToSlide(currentSlide - 1);
+      startCarousel();
+    });
+    document.getElementById('carouselNext').addEventListener('click', () => {
+      clearInterval(carouselTimer);
+      goToSlide(currentSlide + 1);
+      startCarousel();
+    });
+    startCarousel();
+  }
 </script>
 </body>
 </html>
